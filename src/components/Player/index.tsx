@@ -13,10 +13,12 @@ export function Player() {
                 <strong> selecione um podcast para ouvir</strong>
             </div>
 
-            <footer>
+            <footer className={styles.empty}>
                 <div className={styles.progress}>
                     <span>00:00</span>
-                    <div className={styles.emptySlider} />
+                    <div className={styles.slider}>
+                        <div className={styles.emptySlider} />
+                    </div>
                     <span>00:00</span>
                 </div>
 
@@ -32,6 +34,15 @@ export function Player() {
                     <button type="button" className = {styles.playButton}>
                         <img src="/play.svg" alt="Tocar" />
                     </button>
+
+                    <button type="button">
+                        <img src="/play-next.svg" alt="Tocar próxima" />
+                    </button>
+
+                    <button type="button">
+                        <img src="/repeat.svg" alt="Repetir" />
+                    </button>
+
                 </div>
             </footer>
         </div>
