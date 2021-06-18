@@ -1,16 +1,43 @@
 import { format, parseISO } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
-import { GetStaticProps } from 'next';
+import { GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
+import { type } from 'os';
 import { api } from '../../services/api';
 import { convertDurationToTimeString } from '../../utils/convertDurationToTimeString';
 
-export default function Episode() {
+import styles from './episode.module.scss';
+type Episode={
+    id: string;
+    title: string;
+    thumbnail: string;
+    members: string; 
+    duration: string; 
+    durationAsString: string; 
+    url: string; 
+    publishedAt: string;
+    description: string;
+};
+
+type EpisodeProps={
+    episode: Episode;
+};
+
+export default function Episode({ episode }:EpisodeProps) {
     const router = useRouter();
 
     return (
-        <h1>{router.query.slug}</h1>
+        <div className={styles.episode}>
+            <div></div>
+        </div>
     )
+}
+
+export const getStaticPaths: GetStaticPaths = async () =>{
+    return{
+        paths: [],
+        fallback: 'blocking'
+    }
 }
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
@@ -27,12 +54,12 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
             durationAsString: convertDurationToTimeString(Number(data.file.duration)),
             description:  data.description,
             url: data.file.url,
-          };
-    }
-
+          }; 
 
     return {
-        props: {},
-        revalidate: 60 * 60 * 24, //horas
+        props: {
+            episode
+        },
+        revalidate: 60 * 60 * 24, //24 horas
     }
 }
